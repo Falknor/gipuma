@@ -5,11 +5,13 @@
 #pragma once
 #include <sstream>
 #include <fstream>
+#include "cameraGeometryUtils.h"
 
 #if (CV_MAJOR_VERSION ==2)
 #include <opencv2/contrib/contrib.hpp> // needed for applyColorMap!
 #endif
 
+using namespace cv;
 
 /* compute gamma correction (just for display purposes to see more details in farther away areas of disparity image)
  * Input: img   - image
@@ -99,7 +101,7 @@ static void storePlyFileBinary(char* plyFilePath, const Mat_<float> &depthImg, c
 	distImg = Mat::zeros(depthImg.rows,depthImg.cols,CV_32F);
 
 	//write data
-    #pragma omp parallel for
+//    #pragma omp parallel for
 	for(int x = 0; x < depthImg.cols; x++){
 		for(int y = 0; y < depthImg.rows; y++){
 			/*
@@ -127,7 +129,7 @@ static void storePlyFileBinary(char* plyFilePath, const Mat_<float> &depthImg, c
 			//Vec3f ptX_v1 = get3dPointFromPlane(cam.P_inv,cam.C,n,planes.d(y,x),x,y);
 			//cout << ptX_v1 << " / " << ptX << endl;
 
-			if(!(ptX(0) < FLT_MAX && ptX(0) > -FLT_MAX) || !(ptX(1) < FLT_MAX && ptX(12) > -FLT_MAX) || !(ptX(2) < FLT_MAX && ptX(2) >= -FLT_MAX)){
+			if(!(ptX(0) < FLT_MAX && ptX(0) > -FLT_MAX) || !(ptX(1) < FLT_MAX && ptX(1) > -FLT_MAX) || !(ptX(2) < FLT_MAX && ptX(2) >= -FLT_MAX)){
 				ptX(0) = 0.0f;
 				ptX(1) = 0.0f;
 				ptX(2) = 0.0f;
@@ -142,7 +144,8 @@ static void storePlyFileBinary(char* plyFilePath, const Mat_<float> &depthImg, c
                 fwrite(&color, sizeof(color) , 1,  outputPly);
             }
 
-			distImg(y,x) = sqrt(pow(ptX(0)-cam.C(0),2)+pow(ptX(1)-cam.C(1),2)+pow(ptX(2)-cam.C(2),2));
+            float distance = sqrt(pow(ptX(0)-cam.C(0),2)+pow(ptX(1)-cam.C(1),2)+pow(ptX(2)-cam.C(2),2));
+			distImg(y,x) = distance;
 
 			//}else{
 			//	cout << ptX(0) << " " << ptX(1) << " " << ptX(2) << endl;

@@ -6,6 +6,9 @@
 
 #include <iostream>
 #include <fstream>
+#include "algorithmparameters.h"
+using namespace cv;
+using namespace std;
 
 static void getProjectionMatrix(char* line, Mat_<float> &P){
     const char* p;

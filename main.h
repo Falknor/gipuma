@@ -11,6 +11,7 @@
 
 #include <omp.h>
 #include <stdint.h>
+#include <ostream>
 
 using namespace cv;
 using namespace std;
@@ -32,7 +33,8 @@ struct GTcheckParameters {
 //pathes to input images (camera images, ground truth, ...)
 struct InputFiles {
     InputFiles () : gt_filename ( "" ), gt_nocc_filename ( "" ), occ_filename ( "" ), gt_normal_filename ( "" ), calib_filename ( "" ), images_folder ( "" ), p_folder ( "" ), camera_folder ( "" ),krt_file(""), pmvs_folder("") {}
-    vector<string> img_filenames; // input camera images (only filenames, path is set in images_folder), names can also be used for calibration data (e.g. for Strecha P, camera)
+  friend ostream &operator<<(ostream &os, const InputFiles &files);
+  vector<string> img_filenames; // input camera images (only filenames, path is set in images_folder), names can also be used for calibration data (e.g. for Strecha P, camera)
     string gt_filename; // ground truth image
     string gt_nocc_filename; // non-occluded ground truth image (as provided e.g. by Kitti)
     string occ_filename; // occlusion mask (binary map of all the points that are occluded) (as provided e.g. by Middleburry)

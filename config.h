@@ -1,5 +1,5 @@
 #pragma once
-#define MAX_IMAGES 512
+#define MAX_IMAGES 128
 
 /*#define SHARED_HARDCODED*/
 #ifdef SHARED_HARDCODED

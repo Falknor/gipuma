@@ -156,7 +156,7 @@ static void get_directory_entries(
     sort ( directory_entries.begin (), directory_entries.end () );
 }
 
-/* process command line arguments
+/* transferData command line arguments
  * Input: argc, argv - command line arguments
  * Output: inputFiles, outputFiles, parameters, gt_parameters, - algorithm parameters
  */

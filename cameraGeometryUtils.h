@@ -9,6 +9,12 @@
 #include "mathUtils.h"
 #include <limits>
 #include <signal.h>
+#include "main.h"
+#include "cameraparameters.h"
+#include "fileIoUtils.h"
+
+
+using namespace cv;
 
 Mat_<float> getColSubMat ( Mat_<float> M, int* indices, int numCols ) {
     Mat_<float> subMat = Mat::zeros ( M.rows,numCols,CV_32F );
@@ -249,7 +255,7 @@ CameraParameters getCameraParameters ( CameraParameters_cu &cpc,
     vector<Mat_<float> > t ( numCameras );
 
     for ( size_t i = 0; i < numCameras; i++ ) {
-        decomposeProjectionMatrix ( params.cameras[i].P,K[i],R[i],T[i] );
+        cv::decomposeProjectionMatrix ( params.cameras[i].P,K[i],R[i],T[i] );
 
         //cout << "K: " << K[i] << endl;
         //cout << "R: " << R[i] << endl;
@@ -351,4 +357,3 @@ CameraParameters getCameraParameters ( CameraParameters_cu &cpc,
 
     return params;
 }
-

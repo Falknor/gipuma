@@ -20,7 +20,7 @@ struct AlgorithmParameters : public Managed{
 
     AlgorithmParameters():
         algorithm          (0), // algorithm cost type
-        max_disparity      (256.0f), // maximal disparity value CUDA
+        max_disparity      (25.0f), // maximal disparity value CUDA
         min_disparity      (0.0f), // minimum disparity value (default 0) CUDA
         box_hsize          (19), // filter kernel width CUDA
         box_vsize          (19), // filter kernel height CUDA
