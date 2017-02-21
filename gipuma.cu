@@ -33,7 +33,7 @@
 #define SMALLKERNEL
 
 
-//#define EXTRAPOINTFAR
+#define EXTRAPOINTFAR
 #define EXTRAPOINT
 #define EXTRAPOINT2
 
@@ -1046,7 +1046,7 @@ template<typename T>
 
     const float maxdisp = algParams.max_disparity / 2.0f; // temp variable
     int maxIter = 50;
-    for (float deltaZ = maxdisp; deltaZ >= 0.1f && maxIter>0; deltaZ = deltaZ / 10.0f, --maxIter)
+    for (float deltaZ = maxdisp; deltaZ >= 0.01f && maxIter>0; deltaZ = deltaZ / 10.0f, --maxIter)
     {
       getRndDispAndUnitVector_cu(
           *disp_now, *norm_now,
@@ -2154,7 +2154,7 @@ template<typename T>
       cudaDeviceSynchronize();
 #endif
       //plane refinement
-      //gipuma_red_planeRefine_cu<T><<< grid_size, block_size, shared_size_host * sizeof(T)>>>(gs, it);
+      gipuma_red_planeRefine_cu<T><<< grid_size, block_size, shared_size_host * sizeof(T)>>>(gs, it);
       cudaDeviceSynchronize();
 #else
       gipuma_black_cu<T><<< grid_size, block_size, shared_size_host * sizeof(T)>>>(gs, it);
