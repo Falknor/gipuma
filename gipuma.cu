@@ -1046,7 +1046,7 @@ template<typename T>
 
     const float maxdisp = algParams.max_disparity / 2.0f; // temp variable
     int maxIter = 50;
-    for (float deltaZ = maxdisp; deltaZ >= 0.01f && maxIter>0; deltaZ = deltaZ / 10.0f, --maxIter)
+    for (float deltaZ = maxdisp; deltaZ >= 0.01f /*&& maxIter>0*/; deltaZ = deltaZ / 10.0f, --maxIter)
     {
       getRndDispAndUnitVector_cu(
           *disp_now, *norm_now,
