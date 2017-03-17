@@ -405,8 +405,11 @@ static int runGipuma(std::vector<cv::Mat> images,
     printf("Error: %s\n", cudaGetErrorString(err));
   }
 
-  generatedNormalMap = Mat::zeros(img_color_float_alpha[0].rows, img_color_float_alpha[0].cols, CV_32FC3);
-  generatedDepthmap = Mat::zeros(img_color_float_alpha[0].rows, img_color_float_alpha[0].cols, CV_32FC1);
+//  generatedNormalMap = Mat::zeros(img_color_float_alpha[0].rows, img_color_float_alpha[0].cols, CV_32FC3);
+//  generatedDepthmap = Mat::zeros(img_color_float_alpha[0].rows, img_color_float_alpha[0].cols, CV_32FC1);
+
+  cv::Mat tmpNormalMap = Mat::zeros(img_color_float_alpha[0].rows, img_color_float_alpha[0].cols, CV_32FC3);;
+  cv::Mat tmpDepthMap = Mat::zeros(img_color_float_alpha[0].rows, img_color_float_alpha[0].cols, CV_32FC1);;
 
   // Retreive the disparity image from cuda memory
   for (int i = 0; i < img_color_float_alpha[0].cols; i++)
@@ -415,10 +418,15 @@ static int runGipuma(std::vector<cv::Mat> images,
     {
       int center = i + img_color_float_alpha[0].cols * j;
       float4 n = gs->lines->norm4[center];
-      generatedNormalMap(j, i) = Vec3f(n.x, n.y, n.z);
-      generatedDepthmap(j, i) = gs->lines->norm4[i + img_color_float_alpha[0].cols * j].w;
+//      generatedNormalMap(j, i) = Vec3f(n.x, n.y, n.z);
+      tmpNormalMap(j, i) = Vec3f(n.x, n.y, n.z);
+//      generatedDepthmap(j, i) = gs->lines->norm4[i + img_color_float_alpha[0].cols * j].w;
+      tmpDepthMap(j, i) = gs->lines->norm4[i + img_color_float_alpha[0].cols * j].w;
     }
   }
+
+  cv::normalize(tmpDepthMap, generatedDepthmap, 0, 1, NORM_MINMAX, CV_32FC1);
+  cv::normalize(tmpNormalMap, generatedNormalMap, 0, 1, NORM_MINMAX, CV_32FC3);
 
   t = getTickCount() - t;
   double rt = (double) t / getTickFrequency();
