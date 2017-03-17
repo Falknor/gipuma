@@ -29,6 +29,7 @@ set(gipuma_lib_files
         fileIoUtils.h
         gipuma.cu
         main.h
+        ModifiedGipumaAPI.hpp
         )
 
 set(gipuma_demo_files

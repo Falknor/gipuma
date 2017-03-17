@@ -258,8 +258,7 @@ static int runGipuma(std::vector<cv::Mat> images,
                      std::vector<cv::Matx34f> pMatrices,
                      cv::Mat_<Vec3f> &generatedNormalMap,
                      cv::Mat_<float> &generatedDepthmap,
-                     AlgorithmParameters &algParams,
-                     GTcheckParameters &gtParameters
+                     AlgorithmParameters &algParams
                     )
 {
   // create folder to store result images
@@ -408,8 +407,8 @@ static int runGipuma(std::vector<cv::Mat> images,
 //  generatedNormalMap = Mat::zeros(img_color_float_alpha[0].rows, img_color_float_alpha[0].cols, CV_32FC3);
 //  generatedDepthmap = Mat::zeros(img_color_float_alpha[0].rows, img_color_float_alpha[0].cols, CV_32FC1);
 
-  cv::Mat tmpNormalMap = Mat::zeros(img_color_float_alpha[0].rows, img_color_float_alpha[0].cols, CV_32FC3);;
-  cv::Mat tmpDepthMap = Mat::zeros(img_color_float_alpha[0].rows, img_color_float_alpha[0].cols, CV_32FC1);;
+  cv::Mat3f tmpNormalMap = Mat::zeros(img_color_float_alpha[0].rows, img_color_float_alpha[0].cols, CV_32FC3);;
+  cv::Mat1f tmpDepthMap = Mat::zeros(img_color_float_alpha[0].rows, img_color_float_alpha[0].cols, CV_32FC1);;
 
   // Retreive the disparity image from cuda memory
   for (int i = 0; i < img_color_float_alpha[0].cols; i++)
